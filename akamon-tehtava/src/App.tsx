@@ -19,14 +19,14 @@ function App() {
         <DatePicker 
           value={startDate}
           onChange={(newDate) => setStartDate(newDate)}
-          format="DD/MM/YYY"
+          format="DD/MM/YYYY"
         />
         <h2>End Date</h2>
         <DatePicker
           minDate={startDate ?? undefined}
           value={endDate}
           onChange={(newDate) => setEndDate(newDate)}
-          format="DD/MM/YYY"
+          format="DD/MM/YYYY"
         />
         <h1>Displaying dates</h1>
         <p>Start date is {startDate?.format('DD.MM.YYYY') || 'None'}</p>
