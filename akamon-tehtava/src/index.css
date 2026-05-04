@@ -1,11 +1,14 @@
 :root {
+  --primary: #61de2a;
+  --primary-hover: #4fc41f;
+  --primary-border: #3ea517;
   --text: #6b6375;
   --text-h: #08060d;
   --bg: #fff;
   --border: #e5e4e7;
   --code-bg: #f4f3ec;
   --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-bg: rgba(209, 209, 209, 0.1);
   --accent-border: rgba(170, 59, 255, 0.5);
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow:
@@ -27,10 +30,15 @@
 
   @media (max-width: 1024px) {
     font-size: 16px;
+
+    .date-pickers {
+      flex-direction: column;
+      align-items: center;
+    }
   }
 }
 
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
   :root {
     --text: #9ca3af;
     --text-h: #f3f4f6;
@@ -55,7 +63,6 @@
   max-width: 100%;
   margin: 0 auto;
   text-align: center;
-  border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -111,8 +118,56 @@ code {
 }
 
 .App {
-  text-align: center;
-  display: grid;
-  grid-template-columns: 100%;
-  margin: 10% 30% 10% 30%;
+  display: flex;
+  flex-direction: column;
+  margin: 5% 5% 10% 0%;
+}
+
+.bar-chart {
+  width: 100%;
+  height: 400px;
+}
+
+.tab-buttons button {
+  color: var(--primary);
+  padding: 10px 16px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid var(--primary-border);
+  background: var(--bg);
+}
+
+.tab-buttons button:hover{
+  background: var(--primary-hover);
+}
+
+.tab-buttons button.active {
+  background: var(--accent-bg);
+  border-color: var(--accent-border);
+  color: var(--text-h);
+}
+
+.tab-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.date-pickers {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.date-picker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 200px;
+}
+
+.line-chart {
+  width: 100%;
+  height: 400px;
 }
