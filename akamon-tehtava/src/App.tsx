@@ -6,6 +6,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const VAT_MULTIPLIER = 1.255;
+type Tab = 'yesterday' | 'today' | 'tomorrow';
 
 /**
  * Converts the price from EUR/mWh without VAT to snt/kWh with VAT
@@ -57,13 +58,53 @@ const QUERY = `
 
 
 function App() {
-
-  const [dailyPrices, setDailyPrices] = useState([]);
+  const [currentTab, setCurrentTab] = useState<Tab>('today');
+  const [dailyPrices, setDailyPrices] = useState<any[]>([]);
 
   // States for longer period prices
   const [startDate, setStartDate] = useState<Dayjs | null>(null);
   const [endDate, setEndDate] = useState<Dayjs | null>(null);
-  const [periodicPrice, setPeriodicPrice] = useState<number | null>(null);
+  const [periodicPrice, setPeriodicPrice] = useState<any[]>([]);
+
+  const fetchPrices = async (
+    start: Dayjs,
+    end: Dayjs,
+    resolution: string,
+    setter: (prices: any[]) => void
+  ) => {
+    const response = await await fetch('https://graphql.staging.akamon.cloud/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query: QUERY,
+          variables: {
+            tenantId: "AKAMON",
+            deliveryArea: "FI",
+            start: start.startOf('day').toISOString(),
+            end: end.endOf('day').toISOString(),
+            resolution,
+          },
+        }),
+      });
+ 
+      const result = await response.json();
+      setter(result.data.marketPrices.periodicSpotPrices);
+      console.log(result)
+  }
+
+  /**
+   * Getting today's prices when the page is loaded
+   */
+  useEffect(() => {
+    const today = dayjs();
+
+    fetchPrices(
+      today,
+      today,
+      "hour",
+      setDailyPrices
+    )
+  }, []);
 
   /**
    * Fetching the data with GraphQL, updating every time a date range is selected 
@@ -72,42 +113,20 @@ function App() {
   useEffect(() => {
     if (!startDate || !endDate) return;
 
-    const fetchData = async () => {
-      const response = await fetch('https://graphql.staging.akamon.cloud/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: QUERY,
-          variables: {
-            tenantId: "AKAMON",
-            deliveryArea: "FI",
-            start: startDate.toISOString(),
-            end: endDate.endOf('day').toISOString(),
-            resolution: "month"
-          },
-        }),
-      });
+    fetchPrices(
+      startDate,
+      endDate,
+      "month",
+      setPeriodicPrice
+    );
+    console.log(periodicPrice);
 
-      const result = await response.json();
-
-      console.log(startDate.toISOString() + " Start Date")
-      console.log(endDate.toISOString() + " End Date")
-
-      console.log(result);
-
-      const firstPrice = result.data.marketPrices.periodicSpotPrices[0].meanPriceWithoutVat;
-
-      setPeriodicPrice(firstPrice);
-    };
-
-    fetchData();
   }, [startDate, endDate]);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="App">
+        <h1>Today:</h1>
         <h2>Start Date</h2>
         <DatePicker 
           value={startDate}
@@ -126,7 +145,7 @@ function App() {
           {startDate?.format('D.M') || 'None'} to {endDate?.format('D.M') || 'None'}
         </p>
         <h2>Test price:</h2>
-        <p>{periodicPrice !== null ? convertPrice(periodicPrice).toFixed(2) + ' snt/kWh' : 'Loading...'}</p>
+        <p>{periodicPrice !== null ? convertPrice(periodicPrice[0]?.meanPriceWithoutVat).toFixed(2) + ' snt/kWh' : 'Loading...'}</p>
         <p></p>
       </div>
     </LocalizationProvider>
