@@ -1,3 +1,7 @@
+# Laitan huomenna mietteet tähän alle
+
+Jäi datePicker sitten käyttämättä
+
 # Ohjelmointitehtävä – Akamon
 
 Toteuta React-sovellus, joka näyttää sähkön spot-hinnan valitulla aikavälillä.
