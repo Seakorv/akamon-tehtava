@@ -1,21 +1,12 @@
 # Mietteet tehtävästä:
 
-Kirjoita puhtaaksi huomenna
+Tehtävään tein kuluvan päivän, eilisen ja huomisen hintojen näyttämisen BarGraphilla. Päivät voi valita ylhäällä olevista näppäimistä. Tämän päivän kuluvan tunnin hinnan näkee myös, kun on tämän päivän hintanäkymä päällä. Sovellus näyttää myös kyseisten päivien korkeimman ja pienimmän varttihinnan. Tämän lisäksi sovellus näyttää LineGraphilla kuluvan vuoden päivittäiset hinnat tai nappia painamalla sen saa vaihdettua kuukausinäkymään.
 
-Jäi datePicker sitten käyttämättä
+Tehtävässä hankalinta oli aluksi liikkeelle lähteminen, koska typescript oli uutta. Sen ymmärtämisessä ei onneksi kauaa mennyt. Ongelmaksi nousi sitten GraphQL haetun datan käyttäminen. Onglemaa ei itse datan käsittelyssä periaatteessa ollut, vaan ongelma oli tajuta, että huomisen hintojen jälkeen ei ole tulevaisuuden hintoja olemassakaan. Aluksi tavoitteenani oli käyttää datePickeriä, jotta käyttäjä voisi valita haluamansa päivät, mutta datePicker vaikutti turhauttavalta käyttää sen jälkeen, kun olisi voinut melkein vain menneisyyden hintoja valita. Tästä syystä päädyinkin näyttämään hinnat nykyisellä tavalla. Yritin vielä lopuksi näyttää pidempiä aikavälejä datePickerien avulla, mutta pienen mobiilikäytettävyystaistelun jälkeen (jonka kyllä ratkaisin) tulin siihen tulokseen, että käyttäjän ei ole mukava selata pitkälle menneisyyteen nähdäkseen jotain graafista. LineGraphin päivityksen oli viimeinen ongelma, mutta siihen en enää ehtinyt aikaa käyttää.
 
-- Näyttää kuluvan päivän hinnat bargraphina
-- Näyttää kuluvan tunnin keskiarvohinnan
-- Näyttää päivän ylimmän ja alimman varttihinnan
-- Voi valita eilisen tai huomisen, jossa näytetään sitten samat ilman kuluvan tunnin hintaa
-- Alempana on LineGraph, josta näkee kuluvan vuoden päivittäiset keskiarvot.
-- Voi vaihtaa kuukausittaiseen näkymään.
+Tehtävään kului arvioilta kahdeksasta kymmeneen aktiivista tuntia, mutta tein sitä pääasiassa maanantaina pitkin päivää.
 
-Ongelmia:
-- API:sta haetun datan lukeminen. Kesti jonkun aikaa tajuta, että sähkön spot-hinnat selivää vain lähitulevaisuudelle (huomiselle :D). Olisi varmaan ollut helposti keksittävissä jos pörssisähköön olisi joskus kiinnittänyt huomiota
-- Vaikeutta oli myös siinä mitä aion tehdä. Aluksi halusin mahdollisuuden valita tietyn aikavälin datePickerillä, mutta yllä mainittu ongelma esti sen. Tai, ei estänyt mut teki siitä epämielekkään kun käyttäjää todennäköisesti menneisyys kiinnostaa vähemmän.
-- Otin sitten mallia muista vastaavista ja mietin että päivittäisen hinnan esittäminen pylväsgraafina voisi olla hyvä. Pörssisähköä.fi toimi hyvänä inspiraationa.
-- Yritin vielä lisää käyttää DatePickeriä, mutta se ei ollut aluksi mukava mobiilin kanssa. Sain kyllä toimimaan, mutta sitten mietin että tuntuu typerältä pakottaa ottamaan menneisyyden päiviä manuaalisesti niin päädyin vain yksinkertaiseen LineGraphiin esittämään kuluvan vuoden alusta hinnat.
+-------------------
 
 # Ohjelmointitehtävä – Akamon
 
