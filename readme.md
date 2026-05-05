@@ -1,6 +1,21 @@
-# Laitan huomenna mietteet tähän alle
+# Mietteet tehtävästä:
+
+Kirjoita puhtaaksi huomenna
 
 Jäi datePicker sitten käyttämättä
+
+- Näyttää kuluvan päivän hinnat bargraphina
+- Näyttää kuluvan tunnin keskiarvohinnan
+- Näyttää päivän ylimmän ja alimman varttihinnan
+- Voi valita eilisen tai huomisen, jossa näytetään sitten samat ilman kuluvan tunnin hintaa
+- Alempana on LineGraph, josta näkee kuluvan vuoden päivittäiset keskiarvot.
+- Voi vaihtaa kuukausittaiseen näkymään.
+
+Ongelmia:
+- API:sta haetun datan lukeminen. Kesti jonkun aikaa tajuta, että sähkön spot-hinnat selivää vain lähitulevaisuudelle (huomiselle :D). Olisi varmaan ollut helposti keksittävissä jos pörssisähköön olisi joskus kiinnittänyt huomiota
+- Vaikeutta oli myös siinä mitä aion tehdä. Aluksi halusin mahdollisuuden valita tietyn aikavälin datePickerillä, mutta yllä mainittu ongelma esti sen. Tai, ei estänyt mut teki siitä epämielekkään kun käyttäjää todennäköisesti menneisyys kiinnostaa vähemmän.
+- Otin sitten mallia muista vastaavista ja mietin että päivittäisen hinnan esittäminen pylväsgraafina voisi olla hyvä. Pörssisähköä.fi toimi hyvänä inspiraationa.
+- Yritin vielä lisää käyttää DatePickeriä, mutta se ei ollut aluksi mukava mobiilin kanssa. Sain kyllä toimimaan, mutta sitten mietin että tuntuu typerältä pakottaa ottamaan menneisyyden päiviä manuaalisesti niin päädyin vain yksinkertaiseen LineGraphiin esittämään kuluvan vuoden alusta hinnat.
 
 # Ohjelmointitehtävä – Akamon
 
