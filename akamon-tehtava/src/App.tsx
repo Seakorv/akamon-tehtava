@@ -6,9 +6,20 @@ import { convertPrice } from './utils/convertPrice'
 import { CustomTooltip } from './components/CustomTooltip';
 import { BarChartComponent } from './components/BarChartComponent';
 import { LineChartComponent } from './components/LineChartComponent';
+import { getDailyMax } from './utils/dailyMaxNumber';
+import { getDailyMin } from './utils/dailyMinNumber';
 
 type DayTab = 'yesterday' | 'today' | 'tomorrow';
 type PeriodicToggle = 'daily' | 'monthly';
+
+export type SpotPrice = {
+  maxPriceWithoutVat: number;
+  minPriceWithoutVat: number;
+  meanPriceWithoutVat: number;
+  period: {
+    start: string;
+  };
+};
 
 function App() {
   const [currentTab, setCurrentTab] = useState<DayTab>('today');
@@ -82,35 +93,10 @@ function App() {
     setCurrentTab(tab);
   };
 
-  /**
-   * Using reduce function to find the max daily (quarter hour) price from the dailyHourPrices.
-   * Reduce first compares array's current item's (quarterPrice) maxPrice with current candidate to be a max value.
-   * then if it is, it sends the hourPrice to the next iteration's max and so on. If not, the max value stays the same.
-   * Also checking if dailyPrices even exist by checking its lenght. If not, returning null
-   */
-  const dailyMaxObject = dailyPrices.length
-    ? dailyPrices.reduce((max, quarterPrice) =>
-        quarterPrice.maxPriceWithoutVat > max.maxPriceWithoutVat 
-          ? quarterPrice 
-          : max
-      )
-    : null;
-  
-  /**
-   * Converting the object to a number
-   */
-  const dailyMaxNumber = dailyMaxObject?.maxPriceWithoutVat ?? null;
 
-  const dailyMinObject = dailyPrices.length
-    ? dailyPrices.reduce((min, quarterPrice) =>
-      quarterPrice.minPriceWithoutVat < min.minPriceWithoutVat
-        ? quarterPrice
-        : min
-      )
-    : null;
-
-  const dailyMinNumber = dailyMinObject?.minPriceWithoutVat ?? null;
-  
+  const { dailyMaxNumber } = getDailyMax(dailyPrices);
+  const { dailyMinNumber } = getDailyMin(dailyPrices);
+    
   /**
    * Mapping the daily price data for the barchart here. 
    */
@@ -151,13 +137,13 @@ function App() {
         </div>
         <h3>{currentTab.toUpperCase()}:</h3>
         <p>Max quarterly price: {
-            dailyMaxNumber
+            dailyMaxNumber !== null
               ? convertPrice(dailyMaxNumber).toFixed(2)
               : "..."
           } c/kWh
         </p>
         <p>Min quarterly price: {
-            dailyMinNumber
+            dailyMinNumber !== null
               ? convertPrice(dailyMinNumber).toFixed(2)
               : "..."
           } c/kWh
