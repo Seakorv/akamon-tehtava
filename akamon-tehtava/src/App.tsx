@@ -86,7 +86,6 @@ function App() {
    * Using reduce function to find the max daily (quarter hour) price from the dailyHourPrices.
    * Reduce first compares array's current item's (quarterPrice) maxPrice with current candidate to be a max value.
    * then if it is, it sends the hourPrice to the next iteration's max and so on. If not, the max value stays the same.
-   * dailyPrices[0] is the initial value, so starting from the beginning of the array.
    * Also checking if dailyPrices even exist by checking its lenght. If not, returning null
    */
   const dailyMaxObject = dailyPrices.length
